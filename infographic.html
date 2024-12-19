@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Preparedness Guide</title>
+    <style>
+        :root {
+            --tsunami-color: #2196F3;
+            --earthquake-color: #FF5722;
+            --flood-color: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .disaster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .disaster-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .disaster-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .disaster-card.tsunami {
+            border-top: 5px solid var(--tsunami-color);
+        }
+
+        .disaster-card.earthquake {
+            border-top: 5px solid var(--earthquake-color);
+        }
+
+        .disaster-card.flood {
+            border-top: 5px solid var(--flood-color);
+        }
+
+        .disaster-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .disaster-card h2 {
+            color: #1a237e;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section {
+            margin-bottom: 1.5rem;
+        }
+
+        .section h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .warning-signs {
+            background-color: #fff3e0;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .steps {
+            list-style-type: none;
+        }
+
+        .steps li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .steps li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #1a237e;
+        }
+
+        .cta-section {
+            text-align: center;
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            color: white;
+            padding: 3rem;
+            border-radius: 10px;
+            margin-top: 3rem;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 1rem;
+        }
+
+        .emergency-contact {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .emergency-contact p {
+            margin: 0.5rem 0;
+        }
+
+        .hotline {
+            font-size: 1.5rem;
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .disaster-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Disaster Preparedness Guide</h1>
+            <p>Essential information for tsunamis, earthquakes, and floods</p>
+        </header>
+
+        <div class="disaster-grid">
+            <!-- Tsunami Card -->
+            <div class="disaster-card tsunami">
+                <div class="disaster-icon">🌊</div>
+                <h2>Tsunami</h2>
+                
+                <div class="section">
+                    <h3>About</h3>
+                    <p>A series of ocean waves caused by earthquakes, volcanic eruptions, or underwater landslides. Can cause devastating coastal flooding.</p>
+                </div>
+
+                <div class="section warning-signs">
+                    <h3>Warning Signs</h3>
+                    <ul class="steps">
+                        <li>Sudden water recession</li>
+                        <li>Unusual ocean behavior</li>
+                        <li>Strong earthquake near coast</li>
+                        <li>Loud ocean roar</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Safety Steps</h3>
+                    <ul class="steps">
+                        <li>Move to higher ground immediately</li>
+                        <li>Follow evacuation routes</li>
+                        <li>Stay away from the coast</li>
+                        <li>Wait for official all-clear</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Earthquake Card -->
+            <div class="disaster-card earthquake">
+                <div class="disaster-icon">🏚️</div>
+                <h2>Earthquake</h2>
+                
+                <div class="section">
+                    <h3>About</h3>
+                    <p>Sudden ground shaking caused by rock movements in the Earth's crust. Can cause structural damage and secondary hazards.</p>
+                </div>
+
+                <div class="section warning-signs">
+                    <h3>Warning Signs</h3>
+                    <ul class="steps">
+                        <li>Ground tremors</li>
+                        <li>Objects swaying</li>
+                        <li>Loud rumbling sounds</li>
+                        <li>Animals acting strangely</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Safety Steps</h3>
+                    <ul class="steps">
+                        <li>Drop, Cover, and Hold On</li>
+                        <li>Stay away from windows</li>
+                        <li>If outside, find open space</li>
+                        <li>Be prepared for aftershocks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Flood Card -->
+            <div class="disaster-card flood">
+                <div class="disaster-icon">💧</div>
+                <h2>Flood</h2>
+                
+                <div class="section">
+                    <h3>About</h3>
+                    <p>Overflow of water onto normally dry land. Can be caused by heavy rainfall, storm surge, or dam failures.</p>
+                </div>
+
+                <div class="section warning-signs">
+                    <h3>Warning Signs</h3>
+                    <ul class="steps">
+                        <li>Heavy rainfall</li>
+                        <li>Rising water levels</li>
+                        <li>Flood warnings</li>
+                        <li>Water entering buildings</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Safety Steps</h3>
+                    <ul class="steps">
+                        <li>Move to higher ground</li>
+                        <li>Avoid walking in water</li>
+                        <li>Don't drive in floods</li>
+                        <li>Follow evacuation orders</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Stay Prepared, Stay Safe</h2>
+            <p>Knowledge and preparation are your best defense against natural disasters.</p>
+            
+            <div class="emergency-contact">
+                <h3>Emergency Contacts</h3>
+                <p class="hotline">Emergency Hotline: 112</p>
+                <p>National Disaster Response Force (NDRF): 011-24363260</p>
+                <p>Visit: <a href="https://ndma.gov.in" style="color: #1a237e;">National Disaster Management Authority</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

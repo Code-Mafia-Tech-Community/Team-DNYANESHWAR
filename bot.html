@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %}Disaster Registration Form - Rakshasetu{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center mb-5">
+            <h1 class="display-4 mb-4">Disaster Preparedness and Emergency Alerts Registration</h1>
+            <p class="lead">Register to receive timely alerts and updates about disasters in your area.</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Registration Form</h3>
+                    <form id="registration-form">
+                        <!-- Section 1: Personal Information -->
+                        <section class="form-section">
+                            <h2>Personal Information</h2>
+                            <div class="form-group">
+                                <label for="fullName">Full Name <span class="required">*</span></label>
+                                <input type="text" id="fullName" name="fullName" required
+                                       placeholder="Please enter your full name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number <span class="required">*</span></label>
+                                <input type="tel" id="phoneNumber" name="phoneNumber" required
+                                       placeholder="Enter a valid phone number to receive alerts">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email Address <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" required
+                                       placeholder="Provide your email address for detailed updates">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address">Residential Address <span class="required">*</span></label>
+                                <textarea id="address" name="address" required
+                                          placeholder="Enter your complete address for localized alerts"></textarea>
+                            </div>
+                        </section>
+
+                        <!-- Section 2: Location and Preferences -->
+                        <section class="form-section">
+                            <h2>Location and Preferences</h2>
+                            <div class="form-group">
+                                <label for="region">Region/City <span class="required">*</span></label>
+                                <input type="text" id="region" name="region" required
+                                       placeholder="Specify your region or city (e.g., Bengaluru, Karnataka)">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Disaster Types You Want Alerts For <span class="required">*</span></label>
+                                <p class="field-description">Select the types of disasters you want to receive alerts about.</p>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="floods" name="disasterTypes" value="Floods">
+                                        <label for="floods">Floods</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="earthquakes" name="disasterTypes" value="Earthquakes">
+                                        <label for="earthquakes">Earthquakes</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="cyclones" name="disasterTypes" value="Cyclones">
+                                        <label for="cyclones">Cyclones</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="wildfires" name="disasterTypes" value="Wildfires">
+                                        <label for="wildfires">Wildfires</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="landslides" name="disasterTypes" value="Landslides">
+                                        <label for="landslides">Landslides</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="health" name="disasterTypes" value="Health Emergencies">
+                                        <label for="health">Health Emergencies (pandemics, epidemics)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="preferredLanguage">Preferred Language <span class="required">*</span></label>
+                                <select id="preferredLanguage" name="preferredLanguage" required>
+                                    <option value="">Choose your preferred language for alerts</option>
+                                    <option value="English">English</option>
+                                    <option value="Kannada">Kannada</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </section>
+
+                        <!-- Section 3: Communication Preferences -->
+                        <section class="form-section">
+                            <h2>Communication Preferences</h2>
+                            <div class="form-group">
+                                <label for="communicationChannel">Preferred Communication Channel <span class="required">*</span></label>
+                                <select id="communicationChannel" name="communicationChannel" required>
+                                    <option value="">Select your preferred method to receive emergency alerts</option>
+                                    <option value="Telegram">Telegram</option>
+                                    <option value="Email">Email</option>
+                                    <option value="SMS">SMS</option>
+                                    <option value="App">Mobile App Notifications</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" id="telegramGroup">
+                                <label for="telegramUsername">Telegram Username</label>
+                                <input type="text" id="telegramUsername" name="telegramUsername"
+                                       placeholder="Enter your Telegram username to receive alerts via Telegram">
+                                <p class="field-hint">Don't include the @ symbol</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="internetAccess">Do you have access to the internet? <span class="required">*</span></label>
+                                <select id="internetAccess" name="internetAccess" required>
+                                    <option value="">Select if you have regular internet access</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </section>
+
+                        <!-- Section 4: Accessibility and Additional Information -->
+                        <section class="form-section">
+                            <h2>Accessibility and Additional Information</h2>
+                            <div class="form-group">
+                                <label>Special Needs (Optional)</label>
+                                <p class="field-description">Select any special accessibility features you may need.</p>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="voiceAlerts" name="specialNeeds" value="Voice Alerts">
+                                        <label for="voiceAlerts">Require voice alerts (visually impaired)</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="textAlerts" name="specialNeeds" value="Text Alerts">
+                                        <label for="textAlerts">Prefer text alerts (hearing impaired)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="firstAidTrained">Are you trained in first aid? <span class="required">*</span></label>
+                                <select id="firstAidTrained" name="firstAidTrained" required>
+                                    <option value="">Indicate if you have received first-aid training</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="disasterEducation">Would you like to receive disaster education materials? <span class="required">*</span></label>
+                                <select id="disasterEducation" name="disasterEducation" required>
+                                    <option value="">Select if you'd like to receive materials about disaster preparedness</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </section>
+
+                        <!-- Consent and Submit -->
+                        <section class="form-section">
+                            <div class="form-group consent-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="consent" required>
+                                    <label for="consent">
+                                        I agree to receive emergency alerts and understand that my information will be used for disaster management purposes only.
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg">Register for Alerts</button>
+                        </section>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakshasetu - Disaster Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #0d47a1;
+            --accent-color: #2196F3;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1523049673857-eb18f1d7b578') center/cover;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .disaster-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .disaster-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .disaster-image {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .disaster-info {
+            padding: 1.5rem;
+        }
+
+        .symptoms-list, .steps-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .symptoms-list li, .steps-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .symptoms-list li:before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+        }
+
+        .steps-list li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
+        .emergency-contacts {
+            background: #f8f9fa;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .hotline {
+            color: #d32f2f;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-button .icon {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Rakshasetu</a>
+            <div class="ms-auto">
+                <a href="{{ url_for('login') }}" class="btn btn-outline-light me-2">Login</a>
+                <a href="{{ url_for('register') }}" class="btn btn-light">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1>Disaster Education & Preparedness</h1>
+            <p class="lead">Learn about natural disasters, warning signs, and safety measures</p>
+        </div>
+    </section>
+
+    <section class="container my-5">
+        <!-- Navigation Buttons -->
+        <div class="navigation-buttons">
+            <a href="{{ url_for('bot_page') }}" class="nav-button">
+                <span class="icon">💬</span>
+                Fill to be secure
+            <a href="{{ url_for('shelters_page') }}" class="nav-button">
+                <span class="icon">🏠</span>
+                Emergency Shelters
+            </a>
+            <a href="{{ url_for('first_aid_page') }}" class="nav-button">
+                <span class="icon">🏥</span>
+                First Aid Guide
+            </a>
+        </div>
+
+        <h2 class="text-center mb-4">Understanding Natural Disasters</h2>
+        
+        <!-- Tsunami -->
+        <div class="disaster-card">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="https://images.unsplash.com/photo-1509027572446-af8401acfdc1" 
+                         alt="Tsunami" class="disaster-image w-100">
+                </div>
+                <div class="col-md-8 disaster-info">
+                    <h3>🌊 Tsunami</h3>
+                    <p>A tsunami is a series of ocean waves caused by underwater earthquakes, volcanic eruptions, or landslides. These waves can travel at speeds of up to 800 kilometers per hour in the open ocean.</p>
+                    
+                    <h4>Warning Signs & Symptoms:</h4>
+                    <ul class="symptoms-list">
+                        <li>Rapid and unusual ocean water recession</li>
+                        <li>Loud roaring sound from the ocean</li>
+                        <li>Strong earthquake near the coast</li>
+                        <li>Unusual ocean behavior</li>
+                        <li>Water wall approaching the shore</li>
+                    </ul>
+
+                    <h4>Necessary Steps:</h4>
+                    <ul class="steps-list">
+                        <li>Move immediately to higher ground</li>
+                        <li>Follow evacuation routes and signs</li>
+                        <li>Stay away from the beach and waterfront</li>
+                        <li>Listen to official instructions</li>
+                        <li>Keep emergency kit ready</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earthquake -->
+        <div class="disaster-card">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="https://images.unsplash.com/photo-1584314590680-79a88c5f9d65" 
+                         alt="Earthquake" class="disaster-image w-100">
+                </div>
+                <div class="col-md-8 disaster-info">
+                    <h3>🏚️ Earthquake</h3>
+                    <p>An earthquake is the sudden shaking of the ground caused by the movement of tectonic plates beneath Earth's surface. The intensity can vary from mild tremors to devastating shocks.</p>
+                    
+                    <h4>Warning Signs & Symptoms:</h4>
+                    <ul class="symptoms-list">
+                        <li>Ground shaking or rolling</li>
+                        <li>Objects swaying or falling</li>
+                        <li>Loud rumbling sounds</li>
+                        <li>Cracks appearing in walls</li>
+                        <li>Animals behaving strangely</li>
+                    </ul>
+
+                    <h4>Necessary Steps:</h4>
+                    <ul class="steps-list">
+                        <li>Drop, Cover, and Hold On</li>
+                        <li>Stay away from windows and exterior walls</li>
+                        <li>If outside, find an open area</li>
+                        <li>Be prepared for aftershocks</li>
+                        <li>Check for injuries and damage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flood -->
+        <div class="disaster-card">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="https://images.unsplash.com/photo-1547683905-f686c993aae5" 
+                         alt="Flood" class="disaster-image w-100">
+                </div>
+                <div class="col-md-8 disaster-info">
+                    <h3>💧 Flood</h3>
+                    <p>Floods occur when water overflows onto normally dry land. They can be caused by heavy rainfall, storm surge, melting snow, or dam failures. Flash floods can develop within minutes.</p>
+                    
+                    <h4>Warning Signs & Symptoms:</h4>
+                    <ul class="symptoms-list">
+                        <li>Heavy rainfall for extended periods</li>
+                        <li>Rising water levels in rivers</li>
+                        <li>Water entering buildings</li>
+                        <li>Muddy or brown water</li>
+                        <li>Flood warnings from authorities</li>
+                    </ul>
+
+                    <h4>Necessary Steps:</h4>
+                    <ul class="steps-list">
+                        <li>Move to higher ground immediately</li>
+                        <li>Avoid walking or driving through flood waters</li>
+                        <li>Follow evacuation orders</li>
+                        <li>Turn off utilities if instructed</li>
+                        <li>Keep emergency supplies ready</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="emergency-contacts">
+        <div class="container">
+            <h2 class="text-center mb-4">Emergency Contacts</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="contact-card text-center">
+                        <h3>Emergency Hotline</h3>
+                        <p class="hotline">1078</p>
+                        <p>24/7 Emergency Services</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-card text-center">
+                        <h3>NDRF</h3>
+                        <p class="hotline">011-24363260</p>
+                        <p>National Disaster Response Force</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-card text-center">
+                        <h3>Local Authorities</h3>
+                        <p class="hotline">+91-9711077372</p>
+                        <p>District Emergency Operation Center</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

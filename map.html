@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script>
+        L_NO_TOUCH = false;
+        L_DISABLE_3D = false;
+    </script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Emergency Shelters & Medical Facilities</title>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="legend">
+        <h4>Legend</h4>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #3388ff;"></div>
+            <span>Medical Facilities</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff4444;"></div>
+            <span>Emergency Shelters</span>
+        </div>
+    </div>
+
+<script>
+    const map = L.map("map", {
+        center: [12.3148, 75.7366],
+        crs: L.CRS.EPSG3857,
+        zoom: 10,
+        zoomControl: true,
+        preferCanvas: false,
+    });
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            attribution: "Data by &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a>, under <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>.",
+            maxZoom: 18,
+        }
+    ).addTo(map);
+
+    // Helper function to create random markers
+    function addRandomMarkers(markerData, color, icon) {
+        markerData.forEach((data) => {
+            const latOffset = (Math.random() - 0.5) * 0.5;
+            const lngOffset = (Math.random() - 0.5) * 0.5;
+            const marker = L.marker([data.coords[0] + latOffset, data.coords[1] + lngOffset], {
+                icon: L.AwesomeMarkers.icon({
+                    icon: icon,
+                    markerColor: color,
+                    prefix: "fa",
+                }),
+            });
+            
+            const popupContent = `
+                <div style="min-width: 200px;">
+                    <h4>${data.popup}</h4>
+                    <p><strong>Location:</strong> ${(data.coords[0] + latOffset).toFixed(4)}, ${(data.coords[1] + lngOffset).toFixed(4)}</p>
+                    ${data.facilities ? `<p><strong>Facilities:</strong> ${data.facilities}</p>` : ''}
+                    ${data.contact ? `<p><strong>Contact:</strong> ${data.contact}</p>` : ''}
+                </div>
+            `;
+            
+            marker.bindPopup(popupContent).addTo(map);
+        });
+    }
+
+    // Medical assistance markers
+    const medicalMarkers = [
+        {
+            coords: [12.3048, 75.7266],
+            popup: "District Hospital Madikeri",
+            facilities: "24/7 Emergency, ICU, Surgery",
+            contact: "08272-228888"
+        },
+        {
+            coords: [12.3235, 75.756],
+            popup: "Cauvery Hospital Madikeri",
+            facilities: "Emergency Care, Trauma Center",
+            contact: "08272-225555"
+        },
+        {
+            coords: [12.4126, 75.9581],
+            popup: "Vivus Hospital Kushalnagar",
+            facilities: "Emergency, General Medicine",
+            contact: "08276-277777"
+        },
+        {
+            coords: [12.4115, 75.9593],
+            popup: "Kushalnagar PHC",
+            facilities: "Primary Healthcare, First Aid",
+            contact: "08276-273333"
+        },
+    ];
+
+    // Add 20 more random medical facilities
+    for (let i = 0; i < 20; i++) {
+        medicalMarkers.push({
+            coords: [12.3 + Math.random() * 0.8, 75.7 + Math.random() * 0.8],
+            popup: `Medical Facility ${i + 5}`,
+            facilities: "Basic Emergency Care",
+            contact: `+91-${Math.floor(Math.random() * 9000000000) + 1000000000}`
+        });
+    }
+
+    addRandomMarkers(medicalMarkers, "blue", "plus");
+
+    // Shelter markers
+    const shelterMarkers = [
+        {
+            coords: [12.521, 75.833],
+            popup: "High Altitude Shelter 1",
+            facilities: "Capacity: 200, Food, Water, Medical Kit",
+            contact: "Emergency: 1078"
+        },
+        {
+            coords: [12.430, 75.732],
+            popup: "High Altitude Shelter 2",
+            facilities: "Capacity: 150, Basic Amenities",
+            contact: "Emergency: 1078"
+        },
+        {
+            coords: [12.600, 75.900],
+            popup: "High Altitude Shelter 3",
+            facilities: "Capacity: 300, Full Facilities",
+            contact: "Emergency: 1078"
+        },
+        {
+            coords: [12.550, 75.800],
+            popup: "High Altitude Shelter 4",
+            facilities: "Capacity: 250, Emergency Supplies",
+            contact: "Emergency: 1078"
+        },
+    ];
+
+    // Add 20 more random shelters
+    for (let i = 0; i < 20; i++) {
+        shelterMarkers.push({
+            coords: [12.3 + Math.random() * 0.8, 75.7 + Math.random() * 0.8],
+            popup: `Emergency Shelter ${i + 5}`,
+            facilities: `Capacity: ${Math.floor(Math.random() * 200) + 100}`,
+            contact: "Emergency: 1078"
+        });
+    }
+
+    addRandomMarkers(shelterMarkers, "red", "home");
+
+    // Add geolocation control
+    L.control.locate({
+        position: 'topleft',
+        strings: {
+            title: "Show my location"
+        }
+    }).addTo(map);
+</script>
+</body>
+</html>

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Aid Guide - Rakshasetu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #3498db;
+            --text-color: #2c3e50;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-light);
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .first-aid-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: none;
+            margin-bottom: 25px;
+        }
+
+        .first-aid-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .first-aid-card .card-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .emergency-contacts {
+            background: linear-gradient(135deg, #ff6b6b 0%, #e74c3c 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .emergency-contacts h3 {
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .emergency-contact-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .search-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 400px;
+            height: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .chat-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-messages {
+            height: 450px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+            padding: 12px 15px;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .user-message {
+            background: var(--accent-color);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message {
+            background: white;
+            border: 1px solid #dee2e6;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-input {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .chat-input input {
+            border: 2px solid #eee;
+            border-radius: 25px;
+            padding: 12px 20px;
+        }
+
+        .chat-input button {
+            border-radius: 25px;
+            padding: 12px 25px;
+        }
+
+        .step-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-list li {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .step-list li:before {
+            content: '';
+            width: 24px;
+            height: 24px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8em;
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: white;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn.active {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .chat-widget {
+                width: 100%;
+                height: 100%;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+
+            .emergency-contacts {
+                margin: 15px;
+            }
+
+            .first-aid-card {
+                margin: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-shield-alt"></i> Rakshasetu
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/first_aid"><i class="fas fa-medkit"></i> First Aid</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register"><i class="fas fa-user-plus"></i> Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mb-4">
+                    <i class="fas fa-heartbeat text-danger"></i> First Aid Guide
+                </h1>
+            </div>
+        </div>
+
+        <!-- Emergency Contacts -->
+        <div class="emergency-contacts">
+            <h3><i class="fas fa-phone-alt"></i> Emergency Contacts</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="emergency-contact-item">
+                        <i class="fas fa-shield-alt"></i> Police: <strong>100</strong>
+                    </div>
+                    <div class="emergency-contact-item">
+                        <i class="fas fa-ambulance"></i> Ambulance: <strong>108</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="emergency-contact-item">
+                        <i class="fas fa-fire"></i> Fire: <strong>101</strong>
+                    </div>
+                    <div class="emergency-contact-item">
+                        <i class="fas fa-exclamation-triangle"></i> Disaster Management: <strong>1070</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="emergency-contact-item">
+                        <i class="fas fa-female"></i> Women Helpline: <strong>1091</strong>
+                    </div>
+                    <div class="emergency-contact-item">
+                        <i class="fas fa-child"></i> Child Helpline: <strong>1098</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Categories -->
+        <div class="search-container">
+            <input type="text" id="searchInput" class="form-control search-input" 
+                   placeholder="Search for first aid instructions (e.g., burns, cuts, choking)...">
+            <div class="category-filter mt-3" id="categoryFilter">
+                <!-- Categories will be populated dynamically -->
+            </div>
+        </div>
+
+        <!-- First Aid Cards -->
+        <div class="row" id="firstAidCards">
+            <!-- Cards will be dynamically populated -->
+        </div>
+    </div>
+
+    <!-- Chat Widget -->
+    <button class="chat-button" onclick="toggleChat()">
+        <i class="fas fa-comments fa-lg"></i>
+    </button>
+
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <h5 class="m-0">
+                <i class="fas fa-robot"></i> Disaster Response Assistant
+            </h5>
+            <button class="btn-close btn-close-white" onclick="toggleChat()"></button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="bot-message">
+                Hello! I'm your disaster response assistant. How can I help you today?
+            </div>
+        </div>
+        <div class="chat-input">
+            <div class="input-group">
+                <input type="text" id="chatInput" class="form-control" 
+                       placeholder="Ask about first aid or disaster response...">
+                <button class="btn btn-primary" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // First Aid Categories
+        const categories = {
+            "trauma": ["burns", "cuts", "fractures"],
+            "cardiac": ["heart_attack", "chest_pain"],
+            "breathing": ["choking", "drowning"],
+            "environmental": ["heatstroke", "hypothermia", "snake_bite"],
+            "other": ["poisoning", "seizure"],
+            "bleeding": ["nosebleed"]
+        };
+
+        // First Aid Data
+        const firstAidGuides = {
+            "burns": {
+                title: "Burns",
+                category: "trauma",
+                icon: "fa-fire",
+                steps: [
+                    "Cool the burn under cold running water for at least 10 minutes",
+                    "Remove jewelry/tight items before swelling occurs",
+                    "Cover with sterile gauze or clean cloth",
+                    "Do not pop blisters or apply creams",
+                    "Seek medical help if severe or covering large area"
+                ]
+            },
+            "cuts": {
+                title: "Cuts and Wounds",
+                category: "trauma",
+                icon: "fa-cut",
+                steps: [
+                    "Clean the wound with clean water",
+                    "Apply direct pressure to stop bleeding",
+                    "Disinfect with antiseptic solution",
+                    "Apply sterile bandage",
+                    "Monitor for signs of infection"
+                ]
+            },
+            "sprain": {
+                title: "Sprains & Strains",
+                category: "trauma",
+                icon: "fa-bone",
+                steps: [
+                    "Rest the injured area immediately",
+                    "Apply ice pack for 15-20 minutes",
+                    "Use compression bandage",
+                    "Elevate the injured part",
+                    "Avoid heat for first 48 hours"
+                ]
+            },
+            "nosebleed": {
+                title: "Nosebleed",
+                category: "bleeding",
+                icon: "fa-head-side",
+                steps: [
+                    "Sit upright and lean forward slightly",
+                    "Pinch the soft part of nose firmly",
+                    "Breathe through mouth",
+                    "Hold for 10-15 minutes",
+                    "Apply cold compress to nose/cheeks"
+                ]
+            },
+            "heatstroke": {
+                title: "Heat Stroke",
+                category: "environmental",
+                icon: "fa-temperature-high",
+                steps: [
+                    "Move to cool, shaded area",
+                    "Remove excess clothing",
+                    "Apply cool water to skin",
+                    "Place ice packs at neck/armpits/groin",
+                    "Seek immediate medical help"
+                ]
+            },
+            "seizure": {
+                title: "Seizure Management",
+                category: "other",
+                icon: "fa-brain",
+                steps: [
+                    "Clear area of harmful objects",
+                    "Protect head with soft material",
+                    "Time the seizure duration",
+                    "Never put anything in mouth",
+                    "Place in recovery position after"
+                ]
+            },
+            "insect_sting": {
+                title: "Insect Stings",
+                category: "environmental",
+                icon: "fa-bug",
+                steps: [
+                    "Remove stinger if visible",
+                    "Clean area with soap and water",
+                    "Apply cold compress",
+                    "Take antihistamine if available",
+                    "Monitor for allergic reaction"
+                ]
+            },
+            "eye_injury": {
+                title: "Eye Injuries",
+                category: "trauma",
+                icon: "fa-eye",
+                steps: [
+                    "Don't rub the eye",
+                    "Flush with clean water if chemical",
+                    "Cover both eyes with sterile pad",
+                    "Avoid removing embedded objects",
+                    "Seek immediate medical care"
+                ]
+            },
+            "diabetic": {
+                title: "Diabetic Emergency",
+                category: "other",
+                icon: "fa-syringe",
+                steps: [
+                    "Check if person is conscious",
+                    "Give sugar if conscious (juice/candy)",
+                    "Monitor breathing",
+                    "Call emergency if unresponsive",
+                    "Keep person comfortable"
+                ]
+            },
+            "asthma": {
+                title: "Asthma Attack",
+                category: "breathing",
+                icon: "fa-lungs",
+                steps: [
+                    "Help person sit upright",
+                    "Assist with inhaler if available",
+                    "Keep person calm",
+                    "Loosen tight clothing",
+                    "Call emergency if severe"
+                ]
+            },
+            "frostbite": {
+                title: "Frostbite",
+                category: "environmental",
+                icon: "fa-snowflake",
+                steps: [
+                    "Move to warm area",
+                    "Remove wet clothing",
+                    "Gradually warm affected area",
+                    "Don't rub the frostbitten area",
+                    "Seek medical attention"
+                ]
+            },
+            "toothache": {
+                title: "Dental Emergency",
+                category: "other",
+                icon: "fa-tooth",
+                steps: [
+                    "Rinse mouth with warm water",
+                    "Use dental floss to remove debris",
+                    "Apply cold compress outside",
+                    "Take pain reliever if needed",
+                    "See dentist as soon as possible"
+                ]
+            }
+        };
+
+        // Populate category filters
+        function populateCategories() {
+            const container = document.getElementById('categoryFilter');
+            container.innerHTML = `
+                <button class="category-btn active" data-category="all">
+                    <i class="fas fa-th"></i> All
+                </button>
+            `;
+            
+            Object.keys(categories).forEach(category => {
+                container.innerHTML += `
+                    <button class="category-btn" data-category="${category}">
+                        <i class="fas fa-${getCategoryIcon(category)}"></i> 
+                        ${category.charAt(0).toUpperCase() + category.slice(1)}
+                    </button>
+                `;
+            });
+
+            // Add click handlers
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    filterCards(btn.dataset.category);
+                });
+            });
+        }
+
+        function getCategoryIcon(category) {
+            const icons = {
+                "trauma": "band-aid",
+                "cardiac": "heart",
+                "breathing": "lungs",
+                "environmental": "tree",
+                "other": "plus",
+                "bleeding": "tint"
+            };
+            return icons[category] || "plus";
+        }
+
+        // Populate First Aid Cards
+        function populateFirstAidCards() {
+            const container = document.getElementById('firstAidCards');
+            container.innerHTML = '';
+
+            Object.entries(firstAidGuides).forEach(([key, guide]) => {
+                const card = document.createElement('div');
+                card.className = 'col-md-4 mb-4';
+                card.dataset.category = guide.category;
+                
+                card.innerHTML = `
+                    <div class="card first-aid-card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas ${guide.icon || 'fa-medkit'}"></i> 
+                                ${guide.title}
+                            </h5>
+                            <ol class="step-list">
+                                ${guide.steps.map(step => `<li>${step}</li>`).join('')}
+                            </ol>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Filter cards by category
+        function filterCards(category) {
+            const cards = document.querySelectorAll('.col-md-4');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.first-aid-card');
+            
+            cards.forEach(card => {
+                const cardText = card.textContent.toLowerCase();
+                if (cardText.includes(searchTerm)) {
+                    card.parentElement.style.display = 'block';
+                } else {
+                    card.parentElement.style.display = 'none';
+                }
+            });
+        });
+
+        // Chat functionality
+        function toggleChat() {
+            const chatWidget = document.getElementById('chatWidget');
+            chatWidget.style.display = chatWidget.style.display === 'none' ? 'block' : 'none';
+            if (chatWidget.style.display === 'block') {
+                document.getElementById('chatInput').focus();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addMessage('user', message);
+            input.value = '';
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const data = await response.json();
+                
+                // Process and format the response
+                const formattedResponse = formatResponse(data.response);
+                addMessage('bot', formattedResponse);
+            } catch (error) {
+                addMessage('bot', 'Sorry, I encountered an error. Please try again.');
+            }
+        }
+
+        function formatResponse(response) {
+            // Add markdown-style formatting
+            response = response.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            response = response.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            // Add bullet points
+            response = response.replace(/^- (.*)/gm, '• $1');
+            
+            // Add numbers
+            response = response.replace(/^\d\. (.*)/gm, '<span class="number">$&</span>');
+            
+            return response;
+        }
+
+        function addMessage(sender, text) {
+            const messages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.innerHTML = text;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        // Handle Enter key in chat input
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Initialize
+        populateCategories();
+        populateFirstAidCards();
+    </script>
+</body>
+</html>
